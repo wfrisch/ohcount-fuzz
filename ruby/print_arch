@@ -3,13 +3,13 @@ require 'mkmf'
 
 arch = RbConfig::expand(CONFIG["arch"])
 
-distro = if File.exist?("/etc/issue")
+distro = if File.exist?("/etc/os-release")
   # this is "", "CentOS" or "Ubuntu"
-  `cat /etc/issue`.split.first.downcase
+  `egrep "^ID=.*" /etc/os-release`.split("=")[1].downcase
 end
 
 unless ["centos", nil, "ubuntu"].include? distro
-	STDERR.puts "unhandled /etc/issue result: #{distro}"
+	STDERR.puts "unhandled /etc/os-release result: #{distro}"
 end
 
 # either <arch> or <arch>_<distro> if distro is non-null
