@@ -648,7 +648,7 @@ void ohcount_calc_diff_with_disk(
 	char *to_tmp = tmp_file_from_buf(to);
 
 	char command[1000];
-	sprintf(command, "diff -d --normal  --suppress-common-lines --new-file '%s' '%s'", from_tmp, to_tmp);
+	sprintf(command, "diff --normal --suppress-common-lines --new-file '%s' '%s'", from_tmp, to_tmp);
 	FILE *f = popen(command, "r");
 	if (f) {
 		char line[10000];
