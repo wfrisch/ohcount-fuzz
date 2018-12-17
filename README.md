@@ -58,7 +58,7 @@ Source Code
 
 Ohcount source code is available as a Git repository:
 
-  git clone git://github.com/blackducksw/ohcount.git
+  git clone git://github.com/blackducksoftware/ohcount.git
 
 Building Ohcount
 ----------------
@@ -71,7 +71,7 @@ and SWIG (2.0.11). To get these dependencies on Ubuntu/Debian you can run this c
     sudo apt-get install libpcre3 libpcre3-dev libmagic-dev gperf gcc ragel swig
 
 There is a Ruby dependency of 'test-unit' gem for Ruby 2.3.0.  You will need to run this command:
-    
+
     gem install test-unit
 
 Once you have them, go to the top directory of ohcount and run
