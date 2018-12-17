@@ -45,7 +45,7 @@ language detection features from a Ruby application.
 System Requirements
 -------------------
 
-Ohcount is supported on  Ubuntu 14.04 LTS. Other Linux
+Ohcount is supported on Ubuntu 16.04 LTS. Other unix-like
 environments should also work, but your mileage may vary.
 
 Ohcount does not support Windows.
@@ -63,21 +63,29 @@ Ohcount source code is available as a Git repository:
 Building Ohcount
 ----------------
 
-> Last updated: 2018-09-01
+> Last updated: 2018-12-17
 
-You will need ragel 6.8 or higher, bash, gperf, libpcre3-dev, libmagic-dev, gcc (version 4.8.2 or greater)
-and SWIG (2.0.11). To get these dependencies on Ubuntu/Debian you can run this command:
+You will need ragel 6.8 or higher, bash, gperf, libpcre3-dev, libmagic-dev,
+gcc(version 4.8.2 or greater) and swig (>=2.0.11).
 
-    sudo apt-get install libpcre3 libpcre3-dev libmagic-dev gperf gcc ragel swig
-
-There is a Ruby dependency of 'test-unit' gem for Ruby 2.3.0.  You will need to run this command:
-
-    gem install test-unit
-
-Once you have them, go to the top directory of ohcount and run
+#### Ubuntu/Debian
 
 ```
-./build
+$ sudo apt-get install libpcre3 libpcre3-dev libmagic-dev gperf gcc ragel swig
+$ ./build
+```
+
+#### OSx
+
+```
+$ brew install libmagic pcre ragel swig
+$ ./build
+```
+
+For the ruby bindings, there is a dependency for the 'test-unit' gem:
+
+```
+$ gem install test-unit
 ```
 
 Using Ohcount
@@ -86,7 +94,7 @@ Using Ohcount
 Once you've built ohcount, the executable program will be at bin/ohcount. The most basic use is to count lines of code in a directory tree. run:
 
 ```
-bin/ohcount
+$ bin/ohcount
 ```
 
 Ohcount support several options. Run `ohcount --help` for more information.
@@ -97,14 +105,14 @@ Building Ruby and Python Libraries
 To build the ruby wrapper:
 
 ```
-./build ruby
+$ ./build ruby
 ```
 
 To build the python wrapper, run
 
 ```
-python python/setup.py build
-python python/setup.py install
+$ python python/setup.py build
+$ python python/setup.py install
 ```
 
 The python wrapper is currently unsupported.
