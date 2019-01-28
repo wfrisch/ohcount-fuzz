@@ -8,7 +8,7 @@ distro = if File.exist?("/etc/os-release")
   `egrep "^ID=.*" /etc/os-release`.split("=")[1].downcase
 end
 
-unless ["centos", nil, "ubuntu"].include? distro
+unless %w[centos ubuntu fedora].include?(distro.to_s.chomp)
 	STDERR.puts "unhandled /etc/os-release result: #{distro}"
 end
 
