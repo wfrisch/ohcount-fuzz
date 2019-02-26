@@ -45,13 +45,14 @@ language detection features from a Ruby application.
 System Requirements
 -------------------
 
-Ohcount is supported on Ubuntu 16.04 LTS. Other unix-like
-environments should also work, but your mileage may vary.
+Ohcount is supported on Ubuntu 18.04 LTS. It has also been tested on Fedora 29.
+Other unix-like environments should also work, but your mileage may vary.
 
 Ohcount does not support Windows.
 
-Ohcount targets Ruby 2.3.0 The build script requires a bash shell. You
-also need a C compiler to build the native extensions.
+Ohcount targets Ruby 2.5.0. The ruby dev headers provided by Ubuntu/Fedora
+package managers were found to be missing a *config.h* header file. Installing
+ruby using brew/rbenv/rvm works better for compiling ohcount.
 
 Source Code
 -----------
@@ -63,15 +64,22 @@ Ohcount source code is available as a Git repository:
 Building Ohcount
 ----------------
 
-> Last updated: 2018-12-17
+> Last updated: 2019-01-28
 
-You will need ragel 6.8 or higher, bash, gperf, libpcre3-dev, libmagic-dev,
-gcc(version 4.8.2 or greater) and swig (>=2.0.11).
+You will need ragel 7.0 or higher, bash, gperf, libpcre3-dev, libmagic-dev,
+gcc(version 7.3 or greater) and swig (>=3.0.0).
 
 #### Ubuntu/Debian
 
 ```
 $ sudo apt-get install libpcre3 libpcre3-dev libmagic-dev gperf gcc ragel swig
+$ ./build
+```
+
+### Fedora
+
+```
+$ sudo dnf install gcc file-devel gperf ragel swig pcre-devel
 $ ./build
 ```
 
