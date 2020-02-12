@@ -50,10 +50,6 @@ Other unix-like environments should also work, but your mileage may vary.
 
 Ohcount does not support Windows.
 
-Ohcount targets Ruby 2.5.0. The ruby dev headers provided by Ubuntu/Fedora
-package managers were found to be missing a *config.h* header file. Installing
-ruby using brew/rbenv/rvm works better for compiling ohcount.
-
 Source Code
 -----------
 
@@ -64,10 +60,26 @@ Ohcount source code is available as a Git repository:
 Building Ohcount
 ----------------
 
-> Last updated: 2019-01-28
+> Last updated: 2020-02-12
+
+Ohcount targets `Ruby 2.*`. The ruby dev headers provided by Ubuntu/Fedora
+package managers were found to be missing a `config.h` header file. If the
+default ruby and ruby-dev packages do not work, install ruby using
+brew/rbenv/asdf/rvm, which work reliably with ohcount.
 
 You will need ragel 7.0 or higher, bash, gperf, libpcre3-dev, libmagic-dev,
 gcc(version 7.3 or greater) and swig (>=3.0.0).
+For older gcc versions one could try [this fix](https://github.com/blackducksoftware/ohcount/pull/70/commits/c7511b9810a8660a8268a958fee0e365fb9af18f).
+
+```
+$ git clone git://github.com/blackducksoftware/ohcount.git
+$ cd ohcount
+```
+
+For the ruby bindings, there is a dependency for the 'test-unit' gem:
+```
+$ gem install test-unit
+```
 
 #### Ubuntu/Debian
 
@@ -90,11 +102,9 @@ $ brew install libmagic pcre ragel swig
 $ ./build
 ```
 
-For the ruby bindings, there is a dependency for the 'test-unit' gem:
+#### Other Unix systems
 
-```
-$ gem install test-unit
-```
+* If build fails with a missing `ohcount.so` error and any `ruby/x86.../` folder has the file, copy it to `ruby/` folder.
 
 Using Ohcount
 -------------
