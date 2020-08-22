@@ -98,6 +98,7 @@ void test_parser_verify_entity(SourceFile *sf, const char *entity,
 #include "parsers/test_csharp.h"
 #include "parsers/test_css.h"
 #include "parsers/test_d.h"
+#include "parsers/test_dart.h"
 #include "parsers/test_dcl.h"
 #include "parsers/test_dylan.h"
 #include "parsers/test_ebuild.h"
@@ -288,6 +289,7 @@ void all_parser_tests() {
   all_cs_aspx_tests();
   all_csharp_tests();
   all_css_tests();
+  all_dart_tests();
   all_dmd_tests();
   all_dcl_tests();
   all_dylan_tests();

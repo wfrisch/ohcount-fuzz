@@ -25,6 +25,7 @@
 #include "../parsers/css.h"
 #include "../parsers/d.h"
 #include "../parsers/dcl.h"
+#include "../parsers/dart.h"
 #include "../parsers/dylan.h"
 #include "../parsers/ebuild.h"
 #include "../parsers/eiffel.h"
@@ -135,6 +136,7 @@ cs_aspx, parse_cs_aspx
 csharp, parse_csharp
 css, parse_css
 cuda, parse_cuda
+dart, parse_dart
 dcl, parse_dcl
 dmd, parse_d
 dylan, parse_dylan

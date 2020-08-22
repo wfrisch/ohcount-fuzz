@@ -32,6 +32,7 @@ cs_aspx, LANG_CS_ASPX, "", 0
 csharp, LANG_CSHARP, "C#", 0
 css, LANG_CSS, "CSS", 1
 cuda, LANG_CUDA, "CUDA", 0
+dart, LANG_DART, "Dart", 0
 dcl, LANG_DCL, "DCL", 0
 dmd, LANG_DMD, "D", 0
 dtx, LANG_TEX_DTX, "DTX for TeX/LaTeX", 1
