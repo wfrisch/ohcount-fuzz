@@ -51,6 +51,7 @@ ctp, LANG_PHP
 cu, LANG_CUDA
 cxx, LANG_CPP
 d, LANG_DMD
+dart, LANG_DART
 dat, DISAMBIGUATE("dat")
 def, DISAMBIGUATE("def")
 di, LANG_DMD

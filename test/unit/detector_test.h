@@ -221,6 +221,10 @@ void test_detector_brainfuck() {
   ASSERT_DETECT(LANG_BFPP, "foo.bfpp");
 }
 
+void test_detector_dart() {
+  ASSERT_DETECT(LANG_DART, "foo.dart");
+}
+
 void test_detector_emacs_mode() {
 	ASSERT_DETECT(LANG_C, "emacs_mode_c");
 }
@@ -272,6 +276,7 @@ void all_detector_tests() {
   test_detector_basic();
   test_detector_xml_with_custom_extension();
   test_detector_brainfuck();
+  test_detector_dart();
   test_detector_emacs_mode();
   test_detector_emacs_with_extension();
   test_detector_puppet();

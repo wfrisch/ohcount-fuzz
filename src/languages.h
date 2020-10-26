@@ -34,6 +34,7 @@
 #define LANG_CSHARP "csharp"
 #define LANG_CSS "css"
 #define LANG_CUDA "cuda"
+#define LANG_DART "dart"
 #define LANG_DCL "dcl"
 #define LANG_DMD "dmd"
 #define LANG_DYLAN "dylan"
