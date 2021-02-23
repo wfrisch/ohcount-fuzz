@@ -1,3 +1,6 @@
+arch:
+    - amd64
+    - ppc64le
 language: ruby
 install:
   - sudo apt-get install libpcre3 libpcre3-dev libmagic-dev gperf gcc ragel swig
