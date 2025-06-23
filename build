@@ -30,7 +30,7 @@ else
   # You shouldn't have to change the following.
   CFLAGS="-fno-common -g"
   WARN="-Wall -Wno-parentheses"
-  SHARED="-dynamiclib -L$LIB_DIR -lpcre"
+  SHARED="-dynamiclib -L$LIB_DIR -lpcre2-8"
   SHARED_NAME=libohcount.dylib
   RB_SHARED="-dynamic -bundle -lruby"
   RB_SHARED_NAME=ohcount.bundle
@@ -96,7 +96,7 @@ build_ohcount()
   build_parser_o
   echo "Building Ohcount"
   mkdir -p bin/
-  sh -c "$cc src/ohcount.c $files -o bin/ohcount -lpcre -lmagic" || exit 1
+  sh -c "$cc src/ohcount.c $files -o bin/ohcount -lpcre2-8 -lmagic" || exit 1
 }
 
 build_test_suite()
@@ -104,7 +104,7 @@ build_test_suite()
   build_hash_headers
   build_parser_o
   echo "Building test suite"
-  sh -c "$cc test/unit/all_tests.c $files -o test/unit/run_tests -lpcre -lmagic" \
+  sh -c "$cc test/unit/all_tests.c $files -o test/unit/run_tests -lpcre2-8 -lmagic" \
     || exit 1
 }
 
@@ -125,7 +125,7 @@ build_ruby_bindings()
 	mkdir -p ruby/$arch
   sh -c "$cc $RB_SHARED ruby/ohcount_wrap.c $files -o ruby/$arch/$RB_SHARED_NAME \
     -I$RUBY_HEADER_DIR -I$RUBY_CONFIG_DIR \
-    -lpcre -lmagic" || exit 1
+    -lpcre2-8 -lmagic" || exit 1
   sh -c "cd test/unit/ruby && ruby ruby_test.rb" || exit 1
 }
 

@@ -4,7 +4,8 @@
 #ifndef OHCOUNT_STRUCTS_H
 #define OHCOUNT_STRUCTS_H
 
-#include <pcre.h>
+#define PCRE2_CODE_UNIT_WIDTH 8
+#include <pcre2.h>
 
 /**
  * @struct License
@@ -24,7 +25,7 @@ typedef struct {
   const char *re;
 
   /** PCRE flags for re. (Typically PCRE_CASELESS or PCRE_MULTILINE). */
-  int re_flags;
+  uint32_t re_flags;
 
   /**
    * A PCRE regular expression for text that matches re, but should not match
@@ -33,13 +34,13 @@ typedef struct {
   const char *exclude_re;
 
   /** PCRE flags for exclude_re. */
-  int exclude_re_flags;
+  uint32_t exclude_re_flags;
 
   /** The PCRE object for re. (This field is set automatically.) */
-  pcre *regexp;
+  pcre2_code *regexp;
 
   /** The PCRE object for exclude_re. (This field is set automatically.) */
-  pcre *exclude_regexp;
+  pcre2_code *exclude_regexp;
 
 } License;
 

@@ -889,7 +889,8 @@ const char *disambiguate_mod(SourceFile *sourcefile) {
   return NULL; // only blanks
 }
 
-#include <pcre.h>
+#define PCRE2_CODE_UNIT_WIDTH 8
+#include <pcre2.h>
 
 // strnlen is not available on OS X, so we roll our own
 size_t mystrnlen(const char *begin, size_t maxlen) {
@@ -906,24 +907,35 @@ const char *disambiguate_pp(SourceFile *sourcefile) {
 	  return NULL;
 
 	/* prepare regular expressions */
-	const char *error;
-	int erroffset;
+	int error;
+	PCRE2_SIZE erroffset;
 
 	/* try harder with optional spaces */
-	pcre *keyword;
-	keyword = pcre_compile("^\\s*(ensure|content|notify|require|source)\\s+=>",
-			PCRE_MULTILINE, &error, &erroffset, NULL);
-
-	if (pcre_exec(keyword, NULL, p, mystrnlen(p, 10000), 0, 0, NULL, 0) > -1)
+	pcre2_code *keyword;
+	pcre2_match_data *md;
+	keyword = pcre2_compile((PCRE2_SPTR)
+	                        "^\\s*(ensure|content|notify|require|source)\\s+=>",
+	                        PCRE2_ZERO_TERMINATED, PCRE2_MULTILINE,
+	                        &error, &erroffset, NULL);
+	md = pcre2_match_data_create(30, NULL);
+	if (pcre2_match(keyword, (PCRE2_SPTR)p, mystrnlen(p, 10000),
+	                0, 0, md, NULL) > -1) {
+		pcre2_match_data_free(md);
 		return LANG_PUPPET;
+	}
 
 	/* check for standard puppet constructs */
-	pcre *construct;
-	construct = pcre_compile("^\\s*(define\\s+[\\w:-]+\\s*\\(|class\\s+[\\w:-]+(\\s+inherits\\s+[\\w:-]+)?\\s*[\\({]|node\\s+\\'?[\\w:\\.-]+\\'?\\s*{|import\\s+\"|include\\s+[\"']?[\\w:-][\"']?)",
-			PCRE_MULTILINE, &error, &erroffset, NULL);
+	pcre2_code *construct;
+	construct = pcre2_compile((PCRE2_SPTR)"^\\s*(define\\s+[\\w:-]+\\s*\\(|class\\s+[\\w:-]+(\\s+inherits\\s+[\\w:-]+)?\\s*[\\({]|node\\s+\\'?[\\w:\\.-]+\\'?\\s*{|import\\s+\"|include\\s+[\"']?[\\w:-][\"']?)",
+	                          PCRE2_ZERO_TERMINATED, PCRE2_MULTILINE,
+	                          &error, &erroffset, NULL);
 
-	if (pcre_exec(construct, NULL, p, mystrnlen(p, 10000), 0, 0, NULL, 0) > -1)
+	if (pcre2_match(construct, (PCRE2_SPTR)p, mystrnlen(p, 10000),
+	                0, 0, md, NULL) > -1) {
+		pcre2_match_data_free(md);
 		return LANG_PUPPET;
+	}
+	pcre2_match_data_free(md);
 
 	return LANG_PASCAL;
 }
@@ -934,11 +946,19 @@ const char *disambiguate_pl(SourceFile *sourcefile) {
     return NULL;
 
   // Check for a perl shebang on first line of file
-	const char *error;
-	int erroffset;
-	pcre *re = pcre_compile("#![^\\n]*perl", PCRE_CASELESS, &error, &erroffset, NULL);
-  if (pcre_exec(re, NULL, contents, mystrnlen(contents, 100), 0, PCRE_ANCHORED, NULL, 0) > -1)
+  int error;
+  PCRE2_SIZE erroffset;
+  pcre2_match_data *md;
+  pcre2_code *re = pcre2_compile((PCRE2_SPTR)"#![^\\n]*perl",
+                                 PCRE2_ZERO_TERMINATED, PCRE2_CASELESS,
+                                 &error, &erroffset, NULL);
+  md = pcre2_match_data_create_from_pattern(re, NULL);
+  if (pcre2_match(re, (PCRE2_SPTR)contents, mystrnlen(contents, 100),
+                  0, PCRE2_ANCHORED, md, NULL) > -1) {
+    pcre2_match_data_free(md);
     return LANG_PERL;
+  }
+  pcre2_match_data_free(md);
 
   // Check for prolog :- rules
   if (strstr(contents, ":- ") || strstr(contents, ":-\n"))
