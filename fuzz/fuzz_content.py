@@ -8,13 +8,37 @@ import subprocess
 
 FUZZ_BIN = Path("../bin/fuzz_content").resolve()
 BASE_DIR = Path("work")
-RUNS = 10 ** 7
+RUNS = 10 ** 8
 
 
 def prepare_workdirs():
+    # a small mix of manually collected samples
     for path in Path("proglang_samples").glob("*/*"):
         if not path.is_file():
             continue
+
+        ext = path.suffix[1:]
+        work_dir = BASE_DIR / ext
+        corpus_dir = work_dir / "corpus"
+
+        try:
+            os.makedirs(work_dir)
+            os.makedirs(corpus_dir)
+        except FileExistsError:
+            pass
+
+        shutil.copy(path, corpus_dir)
+
+    # https://github.com/TheRenegadeCoder/sample-programs/
+    ignorelist = set(["README.md", "testinfo.yml"])
+
+    for path in Path("sample-programs").glob("archive/*/*/*"):
+        if not path.is_file():
+            continue
+
+        if path.name in ignorelist:
+            continue
+
 
         ext = path.suffix[1:]
         work_dir = BASE_DIR / ext

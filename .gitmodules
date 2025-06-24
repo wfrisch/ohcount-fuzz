@@ -1,0 +1,3 @@
+[submodule "fuzz/sample-programs"]
+	path = fuzz/sample-programs
+	url = https://github.com/TheRenegadeCoder/sample-programs/

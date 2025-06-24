@@ -1,6 +1,18 @@
 ![Coverity Scan Build](https://github.com/blackducksoftware/ohcount/actions/workflows/coverity.yml/badge.svg?branch=main)
 ![Build Status](https://github.com/blackducksoftware/ohcount/actions/workflows/ci.yml/badge.svg?branch=main)
 
+ohcount forked with fuzzing added
+
+```
+git clone --recurse-submodules $repo
+
+./build ohcount
+./build fuzz_content
+./build fuzz_filename
+cd fuzz
+./fuzz_content.py
+```
+
 Ohcount
 =======
 
