@@ -96,7 +96,28 @@ build_ohcount()
   build_parser_o
   echo "Building Ohcount"
   mkdir -p bin/
-  sh -c "$cc src/ohcount.c $files -o bin/ohcount -lpcre2-8 -lmagic" || exit 1
+  CFLAGS="-O2 -g -fsanitize=address"
+  sh -c "$cc src/ohcount.c $CFLAGS $files -o bin/ohcount -lpcre2-8 -lmagic" || exit 1
+}
+
+build_fuzz_content()
+{
+  build_hash_headers
+  build_parser_o || exit 1
+  echo "Building fuzz_content binary"
+  CFLAGS="-O1 -fsanitize=fuzzer,address"
+  cc="clang -g $CFLAGS $WARN -I$INC_DIR -L$LIB_DIR"
+  sh -c "$cc src/fuzz_content.c $files -o bin/fuzz_content -lpcre2-8 -lmagic" || exit 1
+}
+
+build_fuzz_filename()
+{
+  build_hash_headers
+  build_parser_o || exit 1
+  echo "Building fuzz_filename binary"
+  CFLAGS="-O1 -fsanitize=fuzzer,address"
+  cc="clang -g $CFLAGS $WARN -I$INC_DIR -L$LIB_DIR"
+  sh -c "$cc src/fuzz_filename.c $files -o bin/fuzz_filename -lpcre2-8 -lmagic" || exit 1
 }
 
 build_test_suite()
@@ -148,6 +169,14 @@ elif [ $1 == "tests" ]
 then
   build_test_suite
   run_test_suite
+elif [ $1 == "fuzz_content" ]
+then
+  rm -f bin/fuzz_content
+  build_fuzz_content
+elif [ $1 == "fuzz_filename" ]
+then
+  rm -f bin/fuzz_filename
+  build_fuzz_filename
 elif [ $1 == "ruby" ]
 then
   build_ruby_bindings
