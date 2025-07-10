@@ -23,9 +23,6 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
   sf->ext = ext;
   sf->diskpath = 0;
 
-  //sf->contents = strdup("<?php echo Hello ?>");
-  //sf->size = strlen(sf->contents);
-
   sf->contents = malloc(Size + 1);
   assert(sf->contents);
   memcpy(sf->contents, Data, Size);
